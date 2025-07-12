@@ -25,25 +25,28 @@ export const AuthProvider = ({children}) =>{
         try {
             const {data}= await axios.get("/api/auth/check")
             if(data.success){
-                setAuthUser(data.user);
-                connectSocket(data.user);
+                setAuthUser(data.userData);
+                connectSocket(data.userData);
             }
         } catch (error) {
+            toast.error(error.message)
             // This is expected if the user isn't logged in, so we won't show a toast.
-            setAuthUser(null);
-            console.error("Auth check failed (expected on logout):", error.message);
+            //setAuthUser(null);
+            //console.error("Auth check failed (expected on logout):", error.message);
         }
     }
 
     // login func ti handlle user authentication and socket connection
     const login = async (state, credentials) =>{
         try {
-            const {data} = await axios.post(`/api/user/${state}`, credentials);
+            const {data} = await axios.post(`/api/auth/${state}`, credentials);
             if(data.success){
                 // Use data.user for consistency with other functions
-                setAuthUser(data.user);
-                connectSocket(data.user);
-                axios.defaults.headers.common["token"] = data.token;
+                setAuthUser(data.userData);
+                connectSocket(data.userData);
+                axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+
+
                 setToken(data.token);
                 localStorage.setItem("token", data.token)
                 toast.success(data.message)
@@ -77,18 +80,18 @@ export const AuthProvider = ({children}) =>{
         try {
             const {data} = await axios.put("/api/auth/update-profile", body);
             if(data.success){
-                setAuthUser(data.user);
-                toast.success(data.message || "Profile updated successfully");
+                setAuthUser(data.userData);
+                toast.success("Profile updated successfully");
             }
         } catch (error) {
-            const errorMessage = error.response?.data?.message || error.message;
-            toast.error(errorMessage);
+            
+            toast.error(error.message);
         }
     }
 
 //connect socket fuction to handle socket connection and online users updates
     const connectSocket =  (userData) =>{
-        if(!userData?._id || socket?.connected) return;
+        if(!userData|| socket?.connected) return;
         const newSocket = io(
             backendUrl,{
                 query:{
@@ -109,7 +112,8 @@ export const AuthProvider = ({children}) =>{
     useEffect(()=>{
         const verifyUser = async () => {
             if(token){
-                axios.defaults.headers.common["token"]  = token;
+                axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
                 await checkAuth();
             }
             setIsLoading(false);
@@ -127,7 +131,8 @@ export const AuthProvider = ({children}) =>{
         login,
         logout,
         updateProfile,
-        isLoading
+        isLoading,
+        
     }
     return(
         <AuthContext.Provider value={value}>
@@ -137,5 +142,3 @@ export const AuthProvider = ({children}) =>{
 }
 
 export default AuthProvider;
-
-

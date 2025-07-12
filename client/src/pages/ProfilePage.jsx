@@ -5,11 +5,12 @@ import { AuthContext } from '../../context/AuthContext';
 
 
 const ProfilePage = () => {
+
   const{authUser, updateProfile} = useContext(AuthContext)
   const[selectedImg, setSelectedImg] = useState(null)
   const navigate = useNavigate();
-  const[name,setName]= useState("")
-  const[bio, setBio] = useState("")
+  const[name,setName]= useState(authUser.fullName)
+  const[bio, setBio] = useState(authUser.bio)
 
   useEffect(() => {
     if (authUser) {
@@ -46,7 +47,7 @@ const ProfilePage = () => {
           <h3 className='text-lg'>Profile Details</h3>
           <label htmlFor="avatar" className='flex items-center gap-3 cursor-pointer'>
             <input onChange={(e) => setSelectedImg(e.target.files[0])} type="file" id="avatar" accept='.png, .jpg, .jpeg' hidden/>
-            <img src={selectedImg? URL.createObjectURL(selectedImg) : authUser?.profilePic || assets.avatar_icon} alt="" className={`w-12 h-12 object-cover ${selectedImg || authUser?.profilePic ? "rounded-full" : ""}`}/>
+            <img src={selectedImg? URL.createObjectURL(selectedImg) : assets.avatar_icon} alt="" className={`w-12 h-12 object-cover ${selectedImg  && "rounded-full"}`}/>
             Upload profile image
           </label>
           <div className='flex flex-col gap-2'>
@@ -61,7 +62,7 @@ const ProfilePage = () => {
             Save Changes
           </button>
         </form>
-        <img className='max-w-44 aspect-square rounded-full mx-10 mx-sm:mt-10' src= {assets.logo_icon} alt="" />
+        <img className= {`max-w-44 aspect-square rounded-full mx-10 mx-sm:mt-10 ${selectedImg  && "rounded-full"}`} src= {authUser?.profilePic || assets.logo_icon} alt="" />
       </div>
     </div>
   )

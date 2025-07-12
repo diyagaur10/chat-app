@@ -5,7 +5,9 @@ import User from "../models/User.js";
 
 export const protectRoute = async (req,res,next) =>{
     try {
-        const token = req.headers.token;
+        const authHeader = req.headers["authorization"];
+        const token = authHeader && authHeader.split(" ")[1];
+
         const decode= jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(decode.userId).select("-password");
         if(!user){
@@ -20,4 +22,10 @@ export const protectRoute = async (req,res,next) =>{
         res.json({success: false, message: error.message})
     
     }
+}
+
+
+export const checkAuth =(req, res) =>{
+    res.json({success: true, user: req.user});
+
 }

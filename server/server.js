@@ -11,6 +11,7 @@ import { Server } from "socket.io";
 const app = express()
 const server = http.createServer(app)
 
+
 //initialise socket.io server
 export const io= new Server(server, {
     cors:{origin:"*"}
@@ -40,8 +41,17 @@ app.use(express.json({limit: "4mb"}));
 
 app.use(cors());
 app.use("/api/status", (req,res)=> res.send("server is live"));
-app.use("/api/message", messageRouter);
-app.use("/api/user", userRouter);
+app.use("/api/messages", messageRouter);
+app.use("/api/auth", userRouter);
+app.use((req, res, next) => {
+  console.log(`[${req.method}] ${req.path}`);
+  next();
+});
+app.use((req, res, next) => {
+  console.log(`Incoming Request: ${req.method} ${req.url}`);
+  next();
+});
+
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, ()=> console.log(`server is running on port ${PORT}`));
