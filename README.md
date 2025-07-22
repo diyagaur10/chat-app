@@ -1,51 +1,50 @@
-# chat-app
 # 💬 Quick Chat
 
-A **Full-Stack Real-Time Chat Application** built using **MongoDB**, **Express**, **React**, and **Node.js (MERN Stack)**. Quick Chat lets users sign up, send and receive messages in real-time using **Socket.IO**, and is deployed live via **Vercel**.
+**Quick Chat** is a full-stack real-time chat application built using the **MERN stack** (MongoDB, Express.js, React.js, Node.js). It enables users to send and receive messages instantly without refreshing the page, thanks to **Socket.IO** which powers real-time, bi-directional communication between the client and server.
 
-### 🔗 Live Demo:
-[https://chat-app-five-red.vercel.app/](https://chat-app-five-red.vercel.app/)
+🌐 **Live Demo**: [https://chat-app-five-red.vercel.app/](https://chat-app-five-red.vercel.app/)
 
 ---
 
 ## 🚀 Features
 
-- 🔒 **User Authentication** (email, password)
-- 🖼️ **User Profile** with display picture and bio
-- 💬 **Real-Time Messaging** with instant updates using **Socket.IO**
-- 👁️ **Seen** status tracking
-- 🕓 Message **timestamp** and history
-- 🌐 **Live Deployment** via Vercel
+- 🔐 Secure User Authentication with password hashing
+- 📸 User profile setup with profile picture and bio
+- 💬 One-on-one **real-time messaging** using Socket.IO
+- ✅ "Seen" status tracking
+- 🕓 Timestamped message logs
+- 🌍 Live deployment using **Vercel**
+- 📈 Scalable backend built with modular Express.js architecture
 
 ---
 
-## 🧩 Tech Stack
+## 📊 Project Statistics
 
-**Frontend**:
-- React.js
-- Vite
-- Context API
+- 👥 **Total Registered Users**: `293+`
+- 💌 **Total Messages Exchanged**: `641+`
+- 🛡️ Passwords securely hashed before storing in database
+- ⏱️ Created and updated timestamps for every user and message
 
-**Backend**:
+---
+
+## 🧰 Tech Stack
+
+### 📦 Frontend
+- React.js (Vite)
+- Context API for global state management
+- Tailwind CSS (optional)
+
+### 🔧 Backend
 - Node.js
 - Express.js
-- MongoDB
+- MongoDB + Mongoose
 - Socket.IO
 
-**Deployment**:
-- Vercel (Frontend + Backend)
+### ☁️ Deployment
+- Vercel (frontend and backend)
+- MongoDB Atlas (cloud-hosted database)
 
 ---
 
-## 📊 Application Stats
-
-- ✅ **Total Registered Users**: 293+
-- 💬 **Messages Exchanged**: 641+
-- 📡 Real-time communication via **WebSockets**
-- 🔐 Passwords securely **hashed**
-- ⏱️ User and message **timestamps** for activity tracking
-
----
-
-## 📂 Project Structure
+- Credits to GreatStackfor this project tutorial.
 
